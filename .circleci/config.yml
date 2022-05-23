@@ -39,12 +39,12 @@ jobs:
       
       # Test MySQL
       - run:
-        name: Install MySQL CLI; Import dummy data; run an example query
-        command: |
-          sudo apt-get update
-          sudo apt-get install default-mysql-client
-          mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
-          mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
+          name: Install MySQL CLI; Import dummy data; run an example query
+          command: |
+            sudo apt-get update
+            sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
+            mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
       
       - run: node --version
 
