@@ -13,7 +13,7 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/node:lts
-      - image: cimg/mysql:8.0
+      - image: cimg/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
           MYSQL_DATABASE: $MYSQL_DATABASE_NAME
@@ -25,21 +25,17 @@ jobs:
       - checkout
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
       
-      # - run:
-      #     name: Waiting for MySQL to be ready
-      #     command: |
-      #       echo Waiting for MySQL to be ready...
-      #       for i in `seq 1 10`;
-      #       do
-      #         nc -z 127.0.0.1 3306 && echo Success && exit 0
-      #         echo -n .
-      #         sleep 1
-      #       done
-      #       echo Failed waiting for MySQL && exit 1
       - run:
-          name: Wait for Database Connection
-          # preinstalled in circleci/* docker image
-          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+          name: Waiting for MySQL to be ready
+          command: |
+            echo Waiting for MySQL to be ready...
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
       
       # Test MySQL
       - run:
@@ -47,16 +43,13 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install mysql-client
-      - run:
-          name: Test Connection; Import Dummy data; Run an exampl query
-          command: |
             echo Connecting to MySQL test...
-            sudo mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD 
+            sudo mysql -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_USER_PASSWD
             echo Running create tables...
-            sudo mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
             echo Testing Select * from new table...
-            mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
-      
+            mysql -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
+  
       - run: node --version
 
 # Invoke jobs via workflows
