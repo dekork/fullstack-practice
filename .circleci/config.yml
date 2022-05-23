@@ -12,8 +12,8 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: circleci/node:latest
-      - image: circleci/mysql:latest
+      - image: cimg/node:latest
+      - image: cimg/mysql:latest
         environment:
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
           MYSQL_DATABASE: $MYSQL_DATABASE_NAME
