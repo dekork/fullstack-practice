@@ -44,7 +44,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
-            sudo mysql
+            sudo mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD 
             echo --------------------------- 
             sudo mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
             mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
