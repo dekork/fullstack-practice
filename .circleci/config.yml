@@ -40,13 +40,17 @@ jobs:
       # Test MySQL
       - run:
           name: Install MySQL CLI; Import dummy data; run an example query
-          # mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWD --execute="GRANT ALL PRIVILEGES ON $MYSQL_DATABASE_NAME.practice to '$MYSQL_USER'@'%'"
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
+      - run:
+          name: Test Connection; Import Dummy data; Run an exampl query
+          command: |
+            echo Connecting to MySQL test...
             sudo mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD 
-            echo --------------------------- 
+            echo Running create tables...
             sudo mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
+            echo Testing Select * from new table...
             mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
       
       - run: node --version
