@@ -37,9 +37,9 @@ jobs:
       #       done
       #       echo Failed waiting for MySQL && exit 1
       - run:
-        name: Wait for Database Connection
-        # preinstalled in circleci/* docker image
-        command: dockerize -wait tcp://localhost:3306 -timeout 1m
+          name: Wait for Database Connection
+          # preinstalled in circleci/* docker image
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       
       # Test MySQL
       - run:
