@@ -42,7 +42,7 @@ jobs:
           name: Install MySQL CLI; Import dummy data; run an example query
           command: |
             sudo apt-get update
-            sudo apt-get install default-mysql-client
+            sudo apt-get install mysql-client
       - run:
           name: Test Connection; Import Dummy data; Run an exampl query
           command: |
