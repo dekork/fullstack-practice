@@ -45,7 +45,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install default-mysql-client
             echo $MYSQL_ROOT_PASSWD
-            sudo mysql -h 127.0.0.1 -uroot $MYSQL_DATABASE_NAME < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
             mysql -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
       
       - run: node --version
