@@ -40,11 +40,10 @@ jobs:
       # Test MySQL
       - run:
           name: Install MySQL CLI; Import dummy data; run an example query
+          # mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWD --execute="GRANT ALL PRIVILEGES ON $MYSQL_DATABASE_NAME.practice to '$MYSQL_USER'@'%'"
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
-          # mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWD --execute="GRANT ALL PRIVILEGES ON $MYSQL_DATABASE_NAME.practice to '$MYSQL_USER'@'%'"
-            
             echo 'mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql' >> $BASH_ENV
             echo 'mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"' >> $BASH_ENV
       
