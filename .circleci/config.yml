@@ -23,14 +23,36 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+      
+      - run:
+        name: Waiting for MySQL to be ready
+        command: |
+          echo Waiting for MySQL to be ready...
+          for i in `seq 1 10`;
+          do
+            nc -z 127.0.0.1 3306 && echo Success && exit 0
+            echo -n .
+            sleep 1
+          done
+          echo Failed waiting for MySQL && exit 1
+      
+      # Test MySQL
+      - run:
+        name: Install MySQL CLI; Import dummy data; run an example query
+        command: |
+          sudo apt-get install default-mysql-client
+          mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
+          mysql -h 127.0.0.1 -u $MYSQL_USER -p$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
+      
       - run: node --version
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-#workflows:
-  #say-hello-workflow:
-    #jobs:
-      #- say-hello
+workflows:
+  build-workflow:
+    jobs:
+      - build
 
 
 
