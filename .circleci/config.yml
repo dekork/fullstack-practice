@@ -15,10 +15,13 @@ jobs:
       - image: cimg/node:lts
       - image: cimg/mysql:5.7
         environment:
-          - MYSQL_ROOT_PASSWORD= $MYSQL_ROOT_PASSWD
-          - MYSQL_DATABASE= $MYSQL_DATABASE_NAME
-          - MYSQL_USER= $MYSQL_USER
-          - MYSQL_PASSWORD= $MYSQL_USER_PASSWD  
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
+          MYSQL_DATABASE: $MYSQL_DATABASE_NAME
+          MYSQL_USER: $MYSQL_USER
+          MYSQL_PASSWORD: $MYSQL_USER_PASSWD  
+    
+
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
