@@ -15,9 +15,8 @@ jobs:
       - image: cimg/node:lts
       - image: cimg/mysql:5.7
         environment:
-          MYSQL_ROOT_HOST: "%"
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
-          MYSQL_DATABASE: $MYSQL_DATABASE_NAME
+          MYSQL_DATABASE: $MYSQL_DB_NAME
           MYSQL_USER: $MYSQL_USER
           MYSQL_PASSWORD: $MYSQL_USER_PASSWD  
     
@@ -46,10 +45,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install mysql-client
-            echo Connecting to MySQL test...
-            sudo mysql -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_USER_PASSWD
             echo Running create tables...
-            sudo mysql -h 127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWD $MYSQL_DATABASE_NAME < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWD $MYSQL_DB_NAME < app/sql/init.sql
             echo Testing Select * from new table...
             mysql -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
   
