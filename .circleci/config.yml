@@ -8,7 +8,7 @@ jobs:
       - image: cimg/mysql:8.0
         environment:
           MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: practice
           MYSQL_USER: user
           MYSQL_PASSWORD: passw0rd
 
@@ -30,8 +30,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
-            mysql -h 127.0.0.1 -u user -ppassw0rd test_db < sql-data/dummy.sql
-            mysql -h 127.0.0.1 -u user -ppassw0rd --execute="SELECT * FROM test_db.Persons"
+            mysql -h 127.0.0.1 -u user -ppassw0rd practice < app/sql/init.sql
+            mysql -h 127.0.0.1 -u user -ppassw0rd --execute="SELECT * FROM practice.workout"
 workflows:
   version: 2
   build-deploy:
