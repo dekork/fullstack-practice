@@ -30,8 +30,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
-            echo 'mysql -h 127.0.0.1 -u ' << $MYSQL_USER >> '-ppassw0rd practice < app/sql/init.sql'
-            echo 'mysql -h 127.0.0.1 -u ' << $MYSQL_USER >> '-ppassw0rd --execute="SELECT * FROM practice.workouts"'
+            echo 'mysql -h 127.0.0.1 -u ' \<< $MYSQL_USER >> '-ppassw0rd practice < app/sql/init.sql'
+            echo 'mysql -h 127.0.0.1 -u ' \<< $MYSQL_USER >> '-ppassw0rd --execute="SELECT * FROM practice.workouts"'
 workflows:
   version: 2
   build-deploy:
