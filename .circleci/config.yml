@@ -46,9 +46,9 @@ jobs:
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
-            sudo mysql -h 127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWD $MYSQL_DB_NAME < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 --user=root --password=$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < app/sql/init.sql
             echo Testing Select * from new table...
-            mysql -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_USER_PASSWD --execute="SELECT * FROM test_db.Persons"
+            mysql -h 127.0.0.1 --user=$MYSQL_USER --password=MYSQL_PASSWORD --execute="SELECT * FROM $MYSQL_DATABASE.practice"
   
       - run: node --version
 
