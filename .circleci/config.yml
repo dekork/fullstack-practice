@@ -28,7 +28,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install default-mysql-client
-            echo '$MYSQL_DB_NAME'
+            echo $MYSQL_DB_NAME
 workflows:
   version: 2
   build-deploy:
