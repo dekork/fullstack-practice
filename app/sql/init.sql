@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS practice;
+USE pratice;
 CREATE TABLE workouts (
   id int NOT NULL AUTO_INCREMENT,
   workout_name VARCHAR(255) NOT NULL,
