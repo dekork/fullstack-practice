@@ -49,9 +49,9 @@ jobs:
             echo Running create tables...
             echo $CONTEXT_USER_PASSWD
             echo $CONTEXT_ROOT_PASSWD
-            sudo mysql -h 127.0.0.1 --user=root --password=$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
             echo Testing Select * from new table...
-            mysql -h 127.0.0.1 --user=practice --password=$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
+            mysql -h 127.0.0.1 -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
   
       - run: node --version
 
