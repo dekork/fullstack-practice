@@ -15,10 +15,10 @@ jobs:
       - image: cimg/node:lts
       - image: cimg/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
+          MYSQL_ROOT_PASSWORD: $CONTEXT_ROOT_PASSWD
           MYSQL_DATABASE: practice
           MYSQL_USER: practice
-          MYSQL_PASSWORD: $MYSQL_USER_PASSWD
+          MYSQL_PASSWORD: $CONTEXT_USER_PASSWD
     
 
     # Add steps to the job
