@@ -46,6 +46,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
+            echo ${MYSQL_DATABASE}
+            echo $MYSQL_DATABASE
             sudo mysql -h 127.0.0.1 --user=root --password=${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} < app/sql/init.sql
             echo Testing Select * from new table...
             mysql -h 127.0.0.1 --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} --execute="SELECT * FROM ${MYSQL_DATABASE}.practice"
