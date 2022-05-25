@@ -46,9 +46,9 @@ jobs:
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
-            echo $CONTEXT_ROOT_PASSWD | mysql -h 127.0.0.1 -uroot -p practice < app/sql/init.sql
+            mysql -h 127.0.0.1 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
             echo Testing Select * from new table...
-            echo $CONTEXT_USER_PASSWD | mysql -h 127.0.0.1 -upractice -p --execute="SELECT * FROM practice.workouts"
+            mysql -h 127.0.0.1 -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
       - run: node --version
 
 # Invoke jobs via workflows
