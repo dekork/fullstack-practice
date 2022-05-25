@@ -42,14 +42,13 @@ jobs:
       # Test MySQL
       - run:
           name: Install MySQL CLI; Import dummy data; run an example query
-          
           command: |
             sudo apt-get update
             sudo apt-get install mysql-client
-            
-            
-      - run: mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD practice < app/sql/init.sql
-      - run: mysql -h 127.0.0.1 -upractice -p$MYSQL_PASSWORD --execute="SELECT * FROM practice.workouts"
+            echo Running create tables...
+            echo $MYSQL_ROOT_PASSWORD | mysql -h 127.0.0.1 -uroot -p practice < app/sql/init.sql
+            echo Testing Select * from new table...
+            echo $MYSQL_PASSWORD | mysql -h 127.0.0.1 -upractice -p --execute="SELECT * FROM practice.workouts"
       - run: node --version
 
 # Invoke jobs via workflows
