@@ -15,10 +15,11 @@ jobs:
       - image: cimg/node:lts
       - image: cimg/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD: $CONTEXT_ROOT_PASSWD
+          # Root password is random by default, no need to set
           MYSQL_DATABASE: practice
           MYSQL_USER: practice
-          MYSQL_PASSWORD: $CONTEXT_USER_PASSWD
+          MYSQL_PASSWORD: passw0rd
+       #  MYSQL_PASSWORD: $CONTEXT_USER_PASSWD
     
 
     # Add steps to the job
@@ -46,9 +47,12 @@ jobs:
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
-            mysql -h 127.0.0.1 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
-            echo Testing Select * from new table...
-            mysql -h 127.0.0.1 -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
+            mysql -h 127.0.0.1 -uroot -ppassw0rd practice < app/sql/init.sql
+            mysql -h 127.0.0.1 -upractice -ppassw0rd --execute="SELECT * FROM practice.workouts"
+          # context password does not work here...
+          # mysql -h 127.0.0.1 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
+          #  echo Testing Select * from new table...
+          # mysql -h 127.0.0.1 -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
       - run: node --version
 
 # Invoke jobs via workflows
