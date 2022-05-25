@@ -47,7 +47,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
-            mysql -h 127.0.0.1 -uroot -ppassw0rd practice < app/sql/init.sql
+            mysql -h 127.0.0.1 -upractice -ppassw0rd practice < app/sql/init.sql
             mysql -h 127.0.0.1 -upractice -ppassw0rd --execute="SELECT * FROM practice.workouts"
           # context password does not work here...
           # mysql -h 127.0.0.1 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
