@@ -15,10 +15,10 @@ jobs:
       - image: cimg/node:lts
       - image: cimg/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWD
-          MYSQL_DATABASE: $MYSQL_DB_NAME
-          MYSQL_USER: $MYSQL_USER
-          MYSQL_PASSWORD: $MYSQL_USER_PASSWD  
+          MYSQL_ROOT_PASSWORD: $CONTEXT_ROOT_PASSWD
+          MYSQL_DATABASE: practice
+          MYSQL_USER: practice
+          MYSQL_PASSWORD: $CONTEXT_USER_PASSWD 
     
 
     # Add steps to the job
@@ -42,15 +42,16 @@ jobs:
       # Test MySQL
       - run:
           name: Install MySQL CLI; Import dummy data; run an example query
+          
           command: |
             sudo apt-get update
             sudo apt-get install mysql-client
             echo Running create tables...
             echo ${MYSQL_DATABASE}
             echo $MYSQL_DATABASE
-            sudo mysql -h 127.0.0.1 --user=root --password=${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 --user=root --password=$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
             echo Testing Select * from new table...
-            mysql -h 127.0.0.1 --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} --execute="SELECT * FROM ${MYSQL_DATABASE}.practice"
+            mysql -h 127.0.0.1 --user=practice --password=$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
   
       - run: node --version
 
@@ -59,7 +60,9 @@ jobs:
 workflows:
   build-workflow:
     jobs:
-      - build
+      - build:
+          context:
+            - fullstack-practice
 
 
 
