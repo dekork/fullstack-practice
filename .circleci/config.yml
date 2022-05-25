@@ -19,6 +19,7 @@ jobs:
           MYSQL_DATABASE: practice
           MYSQL_USER: practice
           MYSQL_PASSWORD: $CONTEXT_USER_PASSWD
+          MYSQL_UNIX_PORT: 3307
     
 
     # Add steps to the job
@@ -33,7 +34,7 @@ jobs:
             echo Waiting for MySQL to be ready...
             for i in `seq 1 10`;
             do
-              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              nc -z 127.0.0.1 3307 && echo Success && exit 0
               echo -n .
               sleep 1
             done
@@ -49,9 +50,9 @@ jobs:
             echo Running create tables...
             echo $CONTEXT_USER_PASSWD
             echo $CONTEXT_ROOT_PASSWD
-            sudo mysql -h host.docker.internal -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
+            sudo mysql -h 127.0.0.1 --port 3307 -uroot -p$CONTEXT_ROOT_PASSWD practice < app/sql/init.sql
             echo Testing Select * from new table...
-            mysql -h host.docker.internal -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
+            mysql -h 127.0.0.1 --port 3307 -upractice -p$CONTEXT_USER_PASSWD --execute="SELECT * FROM practice.workouts"
   
       - run: node --version
 
