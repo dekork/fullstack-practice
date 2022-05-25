@@ -46,11 +46,10 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install mysql-client
-            echo Running create tables...
-            sudo mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD practice < app/sql/init.sql
-            echo Testing Select * from new table...
-            mysql -h 127.0.0.1 -upractice -p$MYSQL_PASSWORD --execute="SELECT * FROM practice.workouts"
-  
+            
+            
+      - run: mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD practice < app/sql/init.sql
+      - run: mysql -h 127.0.0.1 -upractice -p$MYSQL_PASSWORD --execute="SELECT * FROM practice.workouts"
       - run: node --version
 
 # Invoke jobs via workflows
